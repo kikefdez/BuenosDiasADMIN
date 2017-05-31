@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -46,10 +48,11 @@ public class AsyncTask extends android.os.AsyncTask<BuenosDias, Void, String> {
             http = (HttpURLConnection)datosUrl.openConnection();
             http.setRequestMethod("POST");
 
+            Gson gson = new Gson();
+            String infoEnvio = gson.toJson(parametros[0]);
+
             OutputStream outputStream = http.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(outputStream);
-            String infoEnvio = parametros[0].toString();
-            infoEnvio = infoEnvio.replaceAll("\n", "");
             osw.write(infoEnvio);
             osw.close();
 
